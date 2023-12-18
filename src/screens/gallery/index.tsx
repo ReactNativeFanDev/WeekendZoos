@@ -8,7 +8,7 @@ import { PropsGallery } from "../types";
 
 export const Gallery: React.FC<PropsGallery> = ({ route }) => {
     const flatListRef = useRef<FlatList | null>(null);
-    const { photoData } = PhotoHook({ zooName: route.params.ZooScreen });
+    const { photoData } = PhotoHook({ zooName: route.params.zooScreen });
 
     const scrollToItem = (index: number) => {
         flatListRef.current?.scrollToIndex({ index });
