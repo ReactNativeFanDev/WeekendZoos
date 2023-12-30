@@ -1,8 +1,9 @@
-import React from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { Image, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { NavigationProp, RouteProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../navigation/types";
 import { styles } from "./styles";
+import { useCameraPermission } from "react-native-vision-camera";
 
 
 type PropsZooScreen = {
@@ -12,6 +13,7 @@ type PropsZooScreen = {
 export const ZooScreen: React.FC<PropsZooScreen> = ({ route }) => {
     const { name, uri, description, nearbyHotel, rarestAnimal, rarestAnimalPhoto, zooAddress } = route.params.item;
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const { hasPermission, requestPermission } = useCameraPermission()
 
     function openCamera() {
         navigation.navigate('CameraPhoto', { zooScreen: name });
@@ -24,6 +26,12 @@ export const ZooScreen: React.FC<PropsZooScreen> = ({ route }) => {
     function openMap() {
         navigation.navigate('MapScreen', {zooAddress: zooAddress, markerTitle: name});
     }
+
+    useEffect(() => {
+        if (Platform.OS == 'android') {
+            requestPermission();
+        }
+    }, [])
 
     return (
         <ScrollView style={styles.container}>

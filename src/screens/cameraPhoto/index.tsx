@@ -9,7 +9,6 @@ export const CameraPhoto: React.FC<PropsCameraPhoto> = ({ route }) => {
     const camera = useRef<Camera>(null)
     const device = useCameraDevice('back')
 
-
     const { addPhoto } = PhotoHook({ zooName: route.params.ZooScreen });
 
     async function takePhoto() {
